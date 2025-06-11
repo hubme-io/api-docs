@@ -1,0 +1,154 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/payrolls": {
+      "get": {
+        "description": "Retorna todas as folhas de pagamento da empresa para o mês e ano informados.",
+        "operationId": "getPayrolls",
+        "parameters": [
+          {
+            "name": "month",
+            "required": true,
+            "in": "query",
+            "description": "Mês da folha no formato MM",
+            "schema": {
+              "example": "05",
+              "type": "string"
+            }
+          },
+          {
+            "name": "year",
+            "required": true,
+            "in": "query",
+            "description": "Ano da folha no formato YYYY",
+            "schema": {
+              "example": "2025",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Lista as folhas de pagamento da empresa",
+        "tags": [
+          "Folhas de Pagamento"
+        ]
+      }
+    },
+    "/payrolls/details": {
+      "get": {
+        "description": "Retorna todos os contratos e dados financeiros vinculados a uma folha de pagamento específica.",
+        "operationId": "getPayrollDetails",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "query",
+            "description": "ID da folha de pagamento",
+            "schema": {
+              "example": "abc1234",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Detalhes de uma folha de pagamento",
+        "tags": [
+          "Folhas de Pagamento"
+        ]
+      }
+    },
+    "/payrolls/nfe": {
+      "get": {
+        "description": "Busca e retorna os dados detalhados da Nota Fiscal Eletrônica vinculada a um pagamento de contrato.",
+        "operationId": "getNFe",
+        "parameters": [
+          {
+            "name": "paymentId",
+            "required": true,
+            "in": "query",
+            "description": "ID do pagamento do contrato",
+            "schema": {
+              "example": 1940,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Retorna os dados de uma NFe vinculada a um pagamento",
+        "tags": [
+          "Folhas de Pagamento"
+        ]
+      }
+    },
+    "/Suppliers": {
+      "get": {
+        "description": "Retorna todos os fornecedores com contratos ativos vinculados à empresa autenticada.",
+        "operationId": "getSuppliers",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Lista os fornecedores ativos da empresa",
+        "tags": [
+          "Fornecedores"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Backend API",
+    "description": "Documentação da API do Managefy",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [
+    {
+      "url": "/integration"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "access-token": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "access-token"
+      }
+    },
+    "schemas": {}
+  }
+}
