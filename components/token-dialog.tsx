@@ -1,51 +1,64 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { useToken } from "@/components/token-provider"
-import { CheckCircle, XCircle, Loader2, AlertTriangle } from "lucide-react"
+import { useState, useEffect } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useToken } from "@/components/token-provider";
+import { CheckCircle, XCircle, Loader2, AlertTriangle } from "lucide-react";
 
 interface TokenDialogProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
 export function TokenDialog({ open, onOpenChange }: TokenDialogProps) {
-  const { token, setToken, clearToken, isTokenValid, tokenError, isValidating } = useToken()
-  const [inputToken, setInputToken] = useState(token)
-  const [showToken, setShowToken] = useState(false)
+  const {
+    token,
+    setToken,
+    clearToken,
+    isTokenValid,
+    tokenError,
+    isValidating,
+  } = useToken();
+  const [inputToken, setInputToken] = useState(token);
+  const [showToken, setShowToken] = useState(false);
 
   useEffect(() => {
     if (open) {
-      setInputToken(token)
+      setInputToken(token);
     }
-  }, [open, token])
+  }, [open, token]);
 
   const handleSave = async () => {
     if (inputToken.trim()) {
-      await setToken(inputToken.trim())
+      await setToken(inputToken.trim());
       // Only close if token is valid
       if (!tokenError) {
-        onOpenChange(false)
+        onOpenChange(false);
       }
     }
-  }
+  };
 
   const handleClear = () => {
-    clearToken()
-    setInputToken("")
-    onOpenChange(false)
-  }
+    clearToken();
+    setInputToken("");
+    onOpenChange(false);
+  };
 
   const handleTestToken = () => {
     if (inputToken.trim()) {
-      setToken(inputToken.trim())
+      setToken(inputToken.trim());
     }
-  }
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -53,8 +66,9 @@ export function TokenDialog({ open, onOpenChange }: TokenDialogProps) {
         <DialogHeader>
           <DialogTitle>Token de Acesso da API</DialogTitle>
           <DialogDescription>
-            Digite seu token de acesso da API Managefy para testar endpoints diretamente da documentação. Este token
-            será incluído no cabeçalho access-token de todas as requisições.
+            Digite seu token de acesso da API Managefy para testar endpoints
+            diretamente da documentação. Este token será incluído no cabeçalho
+            access-token de todas as requisições.
           </DialogDescription>
         </DialogHeader>
 
@@ -70,7 +84,12 @@ export function TokenDialog({ open, onOpenChange }: TokenDialogProps) {
                 <XCircle className="w-4 h-4 text-red-600" />
               )}
               <span className="text-sm">
-                Status: {isValidating ? "Validando..." : isTokenValid ? "Token válido" : "Token inválido"}
+                Status:{" "}
+                {isValidating
+                  ? "Validando..."
+                  : isTokenValid
+                  ? "Token válido"
+                  : "Token inválido"}
               </span>
             </div>
           )}
@@ -90,7 +109,7 @@ export function TokenDialog({ open, onOpenChange }: TokenDialogProps) {
               <Input
                 id="token"
                 type={showToken ? "text" : "password"}
-                placeholder="$2b$10$kkFV0hki4OcWVTz.g.PQ1eT/Os2/OhZ9wZYPtl0pxQ56JiXsJDSzu"
+                placeholder="$2b$10$kkFV0hki4OcWVTz.g...."
                 value={inputToken}
                 onChange={(e) => setInputToken(e.target.value)}
                 className="pr-20"
@@ -106,13 +125,18 @@ export function TokenDialog({ open, onOpenChange }: TokenDialogProps) {
               </Button>
             </div>
             <p className="text-xs text-gray-500">
-              Exemplo: $2b$10$kkFV0hki4OcWVTz.g.PQ1eT/Os2/OhZ9wZYPtl0pxQ56JiXsJDSzu
+              Exemplo: $2b$10$kkFV0hki4OcWVTz.g....
             </p>
           </div>
 
           {/* Test Token Button */}
           {inputToken && inputToken !== token && (
-            <Button variant="outline" onClick={handleTestToken} disabled={isValidating} className="w-full">
+            <Button
+              variant="outline"
+              onClick={handleTestToken}
+              disabled={isValidating}
+              className="w-full"
+            >
               {isValidating ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
@@ -133,7 +157,10 @@ export function TokenDialog({ open, onOpenChange }: TokenDialogProps) {
               <Button variant="outline" onClick={() => onOpenChange(false)}>
                 Cancelar
               </Button>
-              <Button onClick={handleSave} disabled={isValidating || !inputToken.trim()}>
+              <Button
+                onClick={handleSave}
+                disabled={isValidating || !inputToken.trim()}
+              >
                 {isValidating ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
@@ -148,5 +175,5 @@ export function TokenDialog({ open, onOpenChange }: TokenDialogProps) {
         </div>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
