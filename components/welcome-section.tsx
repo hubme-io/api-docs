@@ -1,20 +1,23 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { useApiSpec } from "@/components/api-spec-provider"
-import { Code, Zap, Shield, Globe } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { useApiSpec } from "@/components/api-spec-provider";
+import { Code, Zap, Shield, Globe } from "lucide-react";
+import { getEndpointsByTag } from "@/lib/getEndpointsByTag";
 
 export function WelcomeSection() {
-  const { apiSpec } = useApiSpec()
+  const { apiSpec } = useApiSpec();
 
   return (
     <div className="space-y-6 lg:space-y-8">
       {/* Hero Section */}
       <div className="text-center space-y-4">
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900">Managefy API</h1>
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900">
+          Managefy API
+        </h1>
         <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-          Documentação completa da API do Managefy para integração com folhas de pagamento e gestão de fornecedores
+          Documentação completa da API do Managefy para integração.
         </p>
         <div className="flex justify-center">
           <Badge variant="secondary" className="text-sm">
@@ -32,7 +35,8 @@ export function WelcomeSection() {
           </CardHeader>
           <CardContent className="pt-0">
             <p className="text-sm text-gray-600 text-center leading-relaxed">
-              Teste os endpoints da API diretamente na documentação com seu token de acesso.
+              Teste os endpoints da API diretamente na documentação com seu
+              token de acesso.
             </p>
           </CardContent>
         </Card>
@@ -44,7 +48,8 @@ export function WelcomeSection() {
           </CardHeader>
           <CardContent className="pt-0">
             <p className="text-sm text-gray-600 text-center leading-relaxed">
-              Veja exemplos de requisições e respostas com dados reais da sua API.
+              Veja exemplos de requisições e respostas com dados reais da sua
+              API.
             </p>
           </CardContent>
         </Card>
@@ -56,7 +61,8 @@ export function WelcomeSection() {
           </CardHeader>
           <CardContent className="pt-0">
             <p className="text-sm text-gray-600 text-center leading-relaxed">
-              Armazene e gerencie seus tokens de API de forma segura para requisições autenticadas.
+              Armazene e gerencie seus tokens de API de forma segura para
+              requisições autenticadas.
             </p>
           </CardContent>
         </Card>
@@ -68,7 +74,8 @@ export function WelcomeSection() {
           </CardHeader>
           <CardContent className="pt-0">
             <p className="text-sm text-gray-600 text-center leading-relaxed">
-              Documentação clara e exemplos práticos para facilitar a integração.
+              Documentação clara e exemplos práticos para facilitar a
+              integração.
             </p>
           </CardContent>
         </Card>
@@ -85,23 +92,47 @@ export function WelcomeSection() {
               <h4 className="font-semibold mb-3 text-lg">Base URLs</h4>
               <div className="space-y-2">
                 {apiSpec.servers?.map((server, index) => (
-                  <div key={index} className="flex flex-col sm:flex-row sm:items-center gap-2">
-                    <code className="bg-gray-100 px-3 py-2 rounded text-sm font-mono break-all">{server.url}</code>
-                    {server.description && <span className="text-sm text-gray-600">- {server.description}</span>}
+                  <div
+                    key={index}
+                    className="flex flex-col sm:flex-row sm:items-center gap-2"
+                  >
+                    <code className="bg-gray-100 px-3 py-2 rounded text-sm font-mono break-all">
+                      {server.url}
+                    </code>
+                    {server.description && (
+                      <span className="text-sm text-gray-600">
+                        - {server.description}
+                      </span>
+                    )}
                   </div>
                 ))}
               </div>
             </div>
 
-            {apiSpec.tags && (
+            {apiSpec?.paths && (
               <div>
-                <h4 className="font-semibold mb-3 text-lg">Available Categories</h4>
-                <div className="flex flex-wrap gap-2">
-                  {apiSpec.tags.map((tag) => (
-                    <Badge key={tag.name} variant="outline" className="text-sm">
-                      {tag.name}
-                    </Badge>
-                  ))}
+                <h4 className="font-semibold mb-3 text-lg">
+                  {/* Available Categories */}
+                </h4>
+                <div className="space-y-4">
+                  {Object.entries(getEndpointsByTag(apiSpec)).map(
+                    ([tag, endpoints]) => (
+                      <div key={tag}>
+                        <h5 className="font-semibold text-gray-800">{tag}</h5>
+                        <ul className="pl-4 list-disc text-sm text-gray-600">
+                          {endpoints.map((ep, idx) => (
+                            <li key={idx}>
+                              <code className="font-mono text-blue-600">
+                                {ep.method}
+                              </code>{" "}
+                              <code className="font-mono">{ep.path}</code> –{" "}
+                              {ep.summary}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )
+                  )}
                 </div>
               </div>
             )}
@@ -109,5 +140,5 @@ export function WelcomeSection() {
         </Card>
       )}
     </div>
-  )
+  );
 }
