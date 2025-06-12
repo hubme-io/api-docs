@@ -21,6 +21,52 @@ export function GettingStartedSection() {
         </p>
       </div>
 
+      {/* Step 1.1: Gerando seu Token de API */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Badge className="w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0">
+              1.1
+            </Badge>
+            <CardTitle className="flex items-center gap-2">
+              <Key className="w-5 h-5 shrink-0" />
+              <span className="break-words">Como Gerar seu Token</span>
+            </CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <p className="text-gray-600 leading-relaxed">
+            Para gerar seu token de autenticação, siga os passos abaixo dentro
+            da plataforma Managefy:
+          </p>
+
+          <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+            <li>
+              Clique no ícone de <strong>engrenagem</strong> no canto inferior
+              esquerdo da tela para acessar as configurações da sua conta.
+            </li>
+            <li>
+              Selecione a aba <strong>Token API</strong> (essa aba aparece
+              somente se estiver disponível no seu plano).
+            </li>
+            <li>
+              Clique em <strong>"Gerar Novo Token"</strong> — um token de acesso
+              será criado para você.
+            </li>
+            <li>
+              <strong>Atenção:</strong> ao gerar um novo token, o anterior será
+              automaticamente invalidado.
+            </li>
+          </ul>
+
+          <img
+            src="/criartoken.png"
+            alt="Tutorial visual para gerar token de API"
+            className="rounded-lg border shadow-md w-full"
+          />
+        </CardContent>
+      </Card>
+
       {/* Step 1: Authentication */}
       <Card>
         <CardHeader>
