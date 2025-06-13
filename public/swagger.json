@@ -29,7 +29,70 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Folhas de pagamento retornadas com sucesso",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "success": {
+                    "summary": "Lista de folhas de pagamento",
+                    "value": {
+                      "statusCode": 200,
+                      "payload": [
+                        {
+                          "idFolha": "cmbl43a8m000eoc019qx94332",
+                          "folha": "Pagamentos de Maio",
+                          "referencia": "06/2025",
+                          "autor": "Fábio",
+                          "dataFolha": "2025-06-06",
+                          "status": "ACTIVE",
+                          "contratos": [
+                            {
+                              "idPagamento": "cmbqy4dl12345rh01bxjb80wf",
+                              "idContrato": 1,
+                              "nomePJ": "Suppliers - 01",
+                              "razaoSocial": "MANAGEFY LTDA",
+                              "cnpj": "00000000000000",
+                              "centroDeCusto": [
+                                {
+                                  "id": 1,
+                                  "value": "5000.50",
+                                  "percentage": 100,
+                                  "name": "SEM ALOCAÇÃO (PADRÃO)"
+                                }
+                              ],
+                              "servico": "Analista de RH",
+                              "valorServico": 5000,
+                              "adicionais": [
+                                {
+                                  "tipo": "ADDITIONAL",
+                                  "valor": 250,
+                                  "descricao": "Aux Home Office"
+                                },
+                                {
+                                  "tipo": "DISCOUNT",
+                                  "valor": 100,
+                                  "descricao": "Plano de saúde"
+                                },
+                                {
+                                  "tipo": "ADDITIONAL",
+                                  "valor": 1000,
+                                  "descricao": "Comissão de Vendas"
+                                }
+                              ],
+                              "valorTotal": 5000,
+                              "nfInserida": false,
+                              "linkNF": null
+                            }
+                          ]
+                        }
+                      ],
+                      "message": "Folhas de Pagamento retornada com sucesso",
+                      "isSuccess": true
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "security": [
@@ -61,7 +124,71 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Detalhes da folha de pagamento",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "success": {
+                    "summary": "Contratos vinculados à folha",
+                    "value": {
+                      "statusCode": 200,
+                      "payload": [
+                        {
+                          "idFolha": "cmbl43a8m000eoc019qx94332",
+                          "folha": "Pagamentos de Maio",
+                          "referencia": "06/2025",
+                          "dataEmissao": "06/06/2025",
+                          "status": "ACTIVE",
+                          "autor": "Fábio",
+                          "atualizadoPor": "Fábio",
+                          "contratos": [
+                            {
+                              "idPagamento": "cmbqy4dl12345rh01bxjb80wf",
+                              "idContrato": 1,
+                              "nomePJ": "Suppliers - 01",
+                              "razaoSocial": "MANAGEFY LTDA",
+                              "cnpj": "00000000000000",
+                              "centroDeCusto": [
+                                {
+                                  "id": 1,
+                                  "value": "5000.50",
+                                  "percentage": 100,
+                                  "name": "SEM ALOCAÇÃO (PADRÃO)"
+                                }
+                              ],
+                              "servico": "Analista de RH",
+                              "valorServico": 5000,
+                              "adicionais": [
+                                {
+                                  "tipo": "ADDITIONAL",
+                                  "valor": 250,
+                                  "descricao": "Aux Home Office"
+                                },
+                                {
+                                  "tipo": "DISCOUNT",
+                                  "valor": 100,
+                                  "descricao": "Plano de saúde"
+                                },
+                                {
+                                  "tipo": "ADDITIONAL",
+                                  "valor": 1000,
+                                  "descricao": "Comissão de Vendas"
+                                }
+                              ],
+                              "valorTotal": 5000,
+                              "nfInserida": false,
+                              "linkNF": null
+                            }
+                          ]
+                        }
+                      ],
+                      "message": "Folhas de Pagamento retornada com sucesso",
+                      "isSuccess": true
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "security": [
@@ -81,19 +208,106 @@
         "operationId": "getNFe",
         "parameters": [
           {
-            "name": "paymentId",
+            "name": "idPagamento",
             "required": true,
             "in": "query",
             "description": "ID do pagamento do contrato",
             "schema": {
-              "example": 1940,
-              "type": "number"
+              "example": "cmbqy4dl12345rh01bxjb80wf",
+              "type": "string"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Dados da NFe vinculada ao pagamento",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "success": {
+                    "summary": "Nota Fiscal Eletrônica vinculada ao contrato",
+                    "value": {
+                    "statusCode": 200,
+                    "payload": {
+                      "folha": "Agosto",
+                      "referencia": "06/2025",
+                      "totalNotas": 2,
+                      "notas": [
+                        {
+                          "tipo": "PRINCIPAL",
+                          "prestador": {
+                            "cnpj": "00.000.000/0001-00",
+                            "numeroNfse": "NFe123456789",
+                            "serieNfse": "NFe123456789",
+                            "dataEmissao": "2025-05-10",
+                            "codigoVerificacao": "-",
+                            "inscricaoMunicipal": "-",
+                            "endereco": "-"
+                          },
+                          "tomador": {
+                            "razaoSocial": "MANAGEFY TECNOLOGIA LTDA",
+                            "cnpj": "00.000.000/0001-00",
+                            "inscricaoMunicipal": "-",
+                            "endereco": "-"
+                          },
+                          "servico": {
+                            "descricao": "Valor de Contrato",
+                            "codigoServico": "-",
+                            "cnae": "-",
+                            "valor": 5000.50,
+                            "deducoes": 0
+                          },
+                          "impostos": {
+                            "iss": {
+                              "baseCalculo": 0,
+                              "aliquota": 0,
+                              "valor": 0,
+                              "retido": false
+                            }
+                          }
+                        },
+                        {
+                          "tipo": "ADICIONAL",
+                          "prestador": {
+                            "cnpj": "00.000.000/0001-00",
+                            "numeroNfse": "NFe123456789",
+                            "serieNfse": "NFe123456789",
+                            "dataEmissao": "2025-05-10",
+                            "codigoVerificacao": "-",
+                            "inscricaoMunicipal": "-",
+                            "endereco": "-"
+                          },
+                          "tomador": {
+                            "razaoSocial": "-",
+                            "cnpj": "00.000.000/0001-00",
+                            "inscricaoMunicipal": "-",
+                            "endereco": "-"
+                          },
+                          "servico": {
+                            "descricao": "Valor Adicional",
+                            "codigoServico": "-",
+                            "cnae": "-",
+                            "valor": 500.50,
+                            "deducoes": 0
+                          },
+                          "impostos": {
+                            "iss": {
+                              "baseCalculo": 0,
+                              "aliquota": 0,
+                              "valor": 0,
+                              "retido": false
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "message": "Notas fiscais válidas retornadas com sucesso",
+                    "isSuccess": true
+                  }
+                  }
+                }
+              }
+            }
           }
         },
         "security": [
@@ -101,7 +315,7 @@
             "access-token": []
           }
         ],
-        "summary": "Retorna os dados de uma NFe vinculada a um pagamento",
+        "summary": "Buscar NFe vinculada ao pagamento de contrato",
         "tags": [
           "Folhas de Pagamento"
         ]
@@ -114,7 +328,42 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Fornecedores ativos listados com sucesso",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "success": {
+                    "summary": "Lista de fornecedores ativos",
+                    "value": {
+                      "statusCode": 200,
+                      "payload": [
+                        {
+                          "idPJ": "cmbjrkk0m000dpn01unregron",
+                          "nomePJ": "Suppliers - 01",
+                          "email": "sup001@managefy.com.br",
+                          "cnpj": "00000000000000",
+                          "razaoSocial": "MANAGEFY LTDA",
+                          "endereco": "RUA 15 DE NOVEMBRO, 123",
+                          "telefone": "1232065484",
+                          "valor": 5000.50,
+                          "servico": "Gerente de Projetos",
+                          "centroDeCusto": [
+                            {
+                              "id": 1,
+                              "value": "5000,50",
+                              "name": "SEM ALOCAÇÃO (PADRÃO)"
+                            }
+                          ],
+                          "dataCadastro": "2025-05-01T19:23:01.860Z"
+                        }
+                      ],
+                      "message": "Fornecedores retornados com sucesso",
+                      "isSuccess": true
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "security": [

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -52,6 +52,13 @@ export function ApiEndpointSection({ endpointId }: ApiEndpointSectionProps) {
 
   const [method, path] = endpointId.split(":");
   const operation = apiSpec?.paths?.[path]?.[method.toLowerCase()];
+
+  useEffect(() => {
+    setResponse(null);
+    setParameters({});
+    setRequestBody("");
+    setActiveTab("request");
+  }, [endpointId]);
 
   if (!operation) {
     return (
@@ -344,35 +351,49 @@ export function ApiEndpointSection({ endpointId }: ApiEndpointSectionProps) {
           <Card className="flex-1 flex flex-col">
             <CardHeader className="border-b px-6 py-4">
               <div className="flex items-center justify-between">
-                <CardTitle>Testar Endpoint</CardTitle>
-                <div className="flex items-center gap-2">
-                  {!token && (
-                    <Badge
+                <div className="flex items-center justify-between w-full">
+                  <CardTitle>Testar Endpoint</CardTitle>
+                  <div className="flex items-center gap-3">
+                    <Button
                       variant="outline"
-                      className="gap-1 text-amber-600 border-amber-200 bg-amber-50"
+                      size="sm"
+                      onClick={() => {
+                        setParameters({});
+                        setRequestBody("");
+                        setResponse(null);
+                        setActiveTab("request");
+                      }}
                     >
-                      <AlertCircle className="h-3 w-3" />
-                      <span>Sem Token</span>
-                    </Badge>
-                  )}
-                  {token && !isTokenValid && (
-                    <Badge
-                      variant="outline"
-                      className="gap-1 text-red-600 border-red-200 bg-red-50"
-                    >
-                      <XCircle className="h-3 w-3" />
-                      <span>Token Inválido</span>
-                    </Badge>
-                  )}
-                  {token && isTokenValid && (
-                    <Badge
-                      variant="outline"
-                      className="gap-1 text-green-600 border-green-200 bg-green-50"
-                    >
-                      <CheckCircle className="h-3 w-3" />
-                      <span>Token Válido</span>
-                    </Badge>
-                  )}
+                      Novo Teste
+                    </Button>
+                    {!token && (
+                      <Badge
+                        variant="outline"
+                        className="gap-1 text-amber-600 border-amber-200 bg-amber-50 whitespace-nowrap"
+                      >
+                        <AlertCircle className="h-3 w-3" />
+                        <span>Sem Token</span>
+                      </Badge>
+                    )}
+                    {token && !isTokenValid && (
+                      <Badge
+                        variant="outline"
+                        className="gap-1 text-red-600 border-red-200 bg-red-50 whitespace-nowrap"
+                      >
+                        <XCircle className="h-3 w-3" />
+                        <span>Token Inválido</span>
+                      </Badge>
+                    )}
+                    {token && isTokenValid && (
+                      <Badge
+                        variant="outline"
+                        className="gap-1 text-green-600 border-green-200 bg-green-50 whitespace-nowrap"
+                      >
+                        <CheckCircle className="h-3 w-3" />
+                        <span>Token Válido</span>
+                      </Badge>
+                    )}
+                  </div>
                 </div>
               </div>
             </CardHeader>
@@ -613,47 +634,52 @@ export function ApiEndpointSection({ endpointId }: ApiEndpointSectionProps) {
                 </TabsList>
 
                 <TabsContent value="examples" className="p-6 space-y-4">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-                        <CheckCircle className="h-4 w-4 text-green-600" />
-                        Resposta de Sucesso (200 OK)
-                      </h3>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() =>
-                          copyToClipboard(
-                            JSON.stringify(
-                              {
-                                data: { id: "123", name: "Exemplo" },
-                                message: "Sucesso",
-                              },
+                  {operation.responses?.["200"]?.content?.["application/json"]
+                    ?.examples?.success?.value ? (
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                          <CheckCircle className="h-4 w-4 text-green-600" />
+                          Resposta de Sucesso (200 OK)
+                        </h3>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() =>
+                            copyToClipboard(
+                              JSON.stringify(
+                                operation.responses["200"].content[
+                                  "application/json"
+                                ].examples.success.value,
+                                null,
+                                2
+                              )
+                            )
+                          }
+                          className="h-8 w-8 p-0"
+                        >
+                          <Copy className="h-4 w-4" />
+                        </Button>
+                      </div>
+                      <div className="bg-gray-50 p-4 rounded-lg">
+                        <div className="max-h-60 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+                          <pre className="text-xs sm:text-sm whitespace-pre-wrap">
+                            {JSON.stringify(
+                              operation.responses["200"].content[
+                                "application/json"
+                              ].examples.success.value,
                               null,
                               2
-                            )
-                          )
-                        }
-                        className="h-8 w-8 p-0"
-                      >
-                        <Copy className="h-4 w-4" />
-                      </Button>
-                    </div>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <div className="max-h-60 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
-                        <pre className="text-xs sm:text-sm">
-                          {JSON.stringify(
-                            {
-                              data: { id: "123", name: "Exemplo" },
-                              message: "Sucesso",
-                            },
-                            null,
-                            2
-                          )}
-                        </pre>
+                            )}
+                          </pre>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  ) : (
+                    <div className="text-sm text-gray-500 italic">
+                      Nenhum exemplo de resposta disponível.
+                    </div>
+                  )}
                 </TabsContent>
 
                 <TabsContent value="curl" className="p-6">
