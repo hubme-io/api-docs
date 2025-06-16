@@ -57,7 +57,7 @@ export function ApiSpecProvider({ children }: { children: ReactNode }) {
       // Override the server URL to use the correct production endpoint
       spec.servers = [
         {
-          url: "https://devapi.managefy.com.br/integration",
+          url: "https://api.managefy.com.br/integration",
           description: "Managefy Development API",
         },
       ];

@@ -150,7 +150,7 @@ export function ApiEndpointSection({ endpointId }: ApiEndpointSectionProps) {
         statusText: result.statusText || response.statusText,
         headers: result.headers || {},
         data: result.data,
-        requestUrl: `https://devapi.managefy.com.br/integration${targetPath}${
+        requestUrl: `https://api.managefy.com.br/integration${targetPath}${
           queryParams.toString() ? `?${queryParams.toString()}` : ""
         }`,
         requestHeaders: headers,
@@ -179,7 +179,7 @@ export function ApiEndpointSection({ endpointId }: ApiEndpointSectionProps) {
         statusText: "Network Error",
         headers: {},
         data: null,
-        requestUrl: `https://devapi.managefy.com.br/integration${path}`,
+        requestUrl: `https://api.managefy.com.br/integration${path}`,
         requestHeaders: { "access-token": token ? "***" : "not set" },
         requestTime: Date.now() - startTime,
         error: errorMessage,
@@ -197,7 +197,7 @@ export function ApiEndpointSection({ endpointId }: ApiEndpointSectionProps) {
   };
 
   const generateCurlCommand = () => {
-    let url = `https://devapi.managefy.com.br/integration${path}`;
+    let url = `https://api.managefy.com.br/integration${path}`;
 
     // Replace path parameters
     Object.entries(parameters).forEach(([key, value]) => {
