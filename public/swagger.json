@@ -66,17 +66,32 @@
                                 {
                                   "tipo": "ADDITIONAL",
                                   "valor": 250,
-                                  "descricao": "Aux Home Office"
+                                  "descricao": "Aux Home Office",
+                                  "modo": "MERGED"
                                 },
-                                {
+                            {
                                   "tipo": "DISCOUNT",
                                   "valor": 100,
-                                  "descricao": "Plano de saúde"
+                                  "descricao": "Plano de saúde",
+                                  "modo": "MERGED"
+                                },
+                                {
+                                  "tipo": "ADDITIONAL",
+                                  "valor": 100,
+                                  "descricao": "Comissão de Vendas",
+                                  "modo": "SPLITTED"
                                 },
                                 {
                                   "tipo": "ADDITIONAL",
                                   "valor": 1000,
-                                  "descricao": "Comissão de Vendas"
+                                  "descricao": "Comissão de Vendas",
+                                  "modo": "SPLITTED_WITHOUT_NFE_PAYROLL"
+                                },
+                                {
+                                  "tipo": "ADDITIONAL",
+                                  "valor": 400,
+                                  "descricao": "Aux Equipamentos",
+                                  "modo": "INTERNAL_READONLY"
                                 }
                               ],
                               "valorTotal": 5000,
@@ -158,21 +173,41 @@
                               ],
                               "servico": "Analista de RH",
                               "valorServico": 5000,
-                              "adicionais": [
+                               "adicionais": [
                                 {
                                   "tipo": "ADDITIONAL",
                                   "valor": 250,
-                                  "descricao": "Aux Home Office"
+                                  "descricao": "Aux Home Office",
+                                  "modo": "MERGED",
+                                  "linkDebitNF": null
                                 },
                                 {
                                   "tipo": "DISCOUNT",
                                   "valor": 100,
-                                  "descricao": "Plano de saúde"
+                                  "descricao": "Plano de saúde",
+                                  "modo": "MERGED",
+                                  "linkDebitNF": null
+                                },
+                                {
+                                  "tipo": "ADDITIONAL",
+                                  "valor": 100,
+                                  "descricao": "Comissão de Vendas",
+                                  "modo": "SPLITTED",
+                                  "linkDebitNF": null
                                 },
                                 {
                                   "tipo": "ADDITIONAL",
                                   "valor": 1000,
-                                  "descricao": "Comissão de Vendas"
+                                  "descricao": "Comissão de Vendas",
+                                  "modo": "SPLITTED_WITHOUT_NFE_PAYROLL",
+                                  "linkDebitNF": "https://app.managefy.com.br/api/files/id_test"
+                                },
+                                {
+                                  "tipo": "ADDITIONAL",
+                                  "valor": 400,
+                                  "descricao": "Aux Equipamentos",
+                                  "modo": "INTERNAL_READONLY",
+                                  "linkDebitNF": null
                                 }
                               ],
                               "valorTotal": 5000,
